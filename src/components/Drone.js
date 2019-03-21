@@ -7,8 +7,7 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
-  Label
+  Tooltip
 } from "recharts";
 import ReactMapGL, { Marker } from "react-map-gl";
 const token =
@@ -67,7 +66,9 @@ class Drone extends Component {
               mapData.longitude ? mapData.longitude : -90.75563183077658
             }
           >
-            <div>💩</div>
+            <div>
+              <p>Drone</p>
+            </div>
           </Marker>
         </ReactMapGL>
       </div>

@@ -1,4 +1,4 @@
-import { takeEvery, call, put, all, take, race } from "redux-saga/effects";
+import { takeEvery, call, put, all } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import API from "../api";
 import * as actions from "../actions";
