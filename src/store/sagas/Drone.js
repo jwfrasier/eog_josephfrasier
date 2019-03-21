@@ -3,7 +3,7 @@ import { delay } from "redux-saga";
 import API from "../api";
 import * as actions from "../actions";
 
-function* watchPollDroneFetch(action) {
+function* workPollDroneFetch(action) {
   while (true) {
     try {
       const { data: response } = yield call(API.getDroneData);
@@ -17,14 +17,17 @@ function* watchPollDroneFetch(action) {
   }
 }
 
-function* workPollDroneFetch() {
-  while (true) {
-    yield take(actions.POLL_START);
-    yield race([call(watchPollDroneFetch), take(actions.POLL_STOP)]);
-  }
-}
+// function* workPollDroneFetch() {
+//   while (true) {
+//     yield take(actions.POLL_START);
+//     yield race([call(workPollDroneFetch), take(actions.POLL_STOP)]);
+//   }
+// }
 
 function* watchAppLoad() {
-  yield all([takeEvery(actions.POLL_DRONE_DATA, watchPollDroneFetch)]);
+  while (true) {
+    // yield take(actions.POLL_START);
+    yield all([takeEvery(actions.POLL_DRONE_DATA, workPollDroneFetch)]);
+  }
 }
 export default [watchAppLoad];

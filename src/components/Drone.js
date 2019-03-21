@@ -36,7 +36,6 @@ class Drone extends Component {
       }
     });
 
-    console.log("this is lat boi", long);
     let mapData = {
       width: 1000,
       height: 300,
@@ -77,7 +76,6 @@ class Drone extends Component {
 }
 
 const mapState = (state, ownProps) => {
-  console.log(state);
   return {
     data: state.drone.data
   };
