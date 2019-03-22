@@ -15,12 +15,13 @@ function* watchFetchDroneData(action) {
   try {
     const { data: response } = yield call(API.getDroneData);
     const { data } = response;
-
-    console.log("watchFetchDroneData");
-
     yield put({ type: actions.RECEIVE_DRONE_DATA, data: data });
   } catch (error) {
-    yield put({ type: actions.API_ERROR, code: error.code });
+    yield put({
+      type: actions.API_ERROR,
+      code: error.code,
+      message: error.message
+    });
   }
 }
 

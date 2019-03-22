@@ -36,7 +36,11 @@ function* watchFetchWeather(action) {
     longitude
   );
   if (error) {
-    yield put({ type: actions.API_ERROR, code: error.code });
+    yield put({
+      type: actions.API_ERROR,
+      code: error.code,
+      message: error.message
+    });
     yield cancel();
     return;
   }
