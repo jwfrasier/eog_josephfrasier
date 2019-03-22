@@ -19,8 +19,7 @@ function* watchFetchDroneData(action) {
   } catch (error) {
     yield put({
       type: actions.API_ERROR,
-      code: error.code,
-      message: error.message
+      ...error
     });
   }
 }
