@@ -7,7 +7,8 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
+  Label
 } from "recharts";
 import ReactMapGL, { Marker } from "react-map-gl";
 const token =
@@ -18,7 +19,8 @@ class Drone extends Component {
     this.props.onLoad();
   }
   render() {
-    let data = this.props.data;
+    const data = [...this.props.data];
+
     let lat = data.map(map => {
       if (!map.latitude) {
         return 0;
@@ -35,6 +37,7 @@ class Drone extends Component {
       }
     });
 
+    // console.log("this is lat boi", long);
     let mapData = {
       width: 1000,
       height: 300,
@@ -47,7 +50,7 @@ class Drone extends Component {
         <LineChart width={1000} height={400} data={data}>
           <Line dot={false} type="monotone" dataKey="metric" stroke="#8884d8" />
           <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="timestamp" interval={60} />
+          <XAxis dataKey="date" interval={50} />
           <YAxis
             domain={[200, 400]}
             label={{
@@ -66,9 +69,7 @@ class Drone extends Component {
               mapData.longitude ? mapData.longitude : -90.75563183077658
             }
           >
-            <div>
-              <p>Drone</p>
-            </div>
+            <div>💩</div>
           </Marker>
         </ReactMapGL>
       </div>
@@ -77,16 +78,21 @@ class Drone extends Component {
 }
 
 const mapState = (state, ownProps) => {
+  // console.log(state);
   return {
     data: state.drone.data
   };
 };
 
 const mapDispatch = dispatch => ({
-  onLoad: () =>
+  onLoad: () => {
     dispatch({
-      type: actions.POLL_DRONE_DATA
-    })
+      type: actions.FETCH_DRONE_DATA
+    });
+    dispatch({
+      type: actions.START_POLL_DRONE_DATA
+    });
+  }
 });
 
 export default connect(

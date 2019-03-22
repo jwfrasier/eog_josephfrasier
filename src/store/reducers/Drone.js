@@ -10,16 +10,17 @@ const startLoading = (state, action) => {
 };
 
 const receiveDroneData = (state, action) => {
-  const datum = action.data;
+  const data = action.data || []; // just in case we get back invalid data
   const thirtyMinutesAgo = new Date().getTime() - 180000;
-  const byIsOlderThan30Minutes = datum => datum.timestamp < thirtyMinutesAgo;
 
-  const filteredData = datum.filter(byIsOlderThan30Minutes);
+  let filteredData = [];
 
-  filteredData.forEach(
-    data =>
-      (data.timestamp = new Date(data.timestamp).toLocaleTimeString("en-US"))
-  );
+  data.forEach(datum => {
+    if (datum.timestamp < thirtyMinutesAgo) {
+      datum.date = new Date(datum.timestamp).toLocaleTimeString("en-US");
+      filteredData.push(datum);
+    }
+  });
 
   return {
     ...state,
